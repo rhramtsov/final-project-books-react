@@ -45,3 +45,31 @@ function Footer() {
 }
 
 export default Footer;
+import React from 'react';
+import { Link } from 'react-router-dom'; // Make sure to import Link from react-router-dom
+
+function Footer() {
+  return (
+    <>
+      <div className="container">
+        <footer className="py-3 my-4">
+          <ul className="nav justify-content-center border-bottom pb-3 mb-3">
+            {/* Existing nav items */}
+            <li className="nav-item">
+              <Link to="/" className="nav-link px-2 text-muted">Home</Link>
+            </li>
+            {/* ... other items ... */}
+            <li className="nav-item">
+              <Link to="/contact-us" className="nav-link px-2 text-muted">Contact Us</Link>
+            </li>
+            {/* ... other items ... */}
+          </ul>
+          <p className="text-center text-muted">© 2022 Company, Inc</p>
+          <img src={process.env.PUBLIC_URL + "/logo192.png"} alt="logo" />
+        </footer>
+      </div>
+    </>
+  );
+}
+
+export default Footer;
