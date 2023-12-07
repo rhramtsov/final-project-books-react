@@ -15,14 +15,15 @@ import ContactUs from "./components/ContactUs";
 const API_URL = process.env.REACT_APP_API_URL;
 
 const fetchCategories = async () => {
-  const response = await axios.get(`${API_URL}/category`);
+  debugger
+  const response = await axios.get(`http://localhost:8000/category`);
   return response.data;
 };
 
 const fetchProducts = async (category, searchText = null) => {
-  let url = `${API_URL}/product?category=${category}`;
+  let url = `http://localhost:8000/product?category=${category}`;
   if (searchText) {
-    url = `${API_URL}/product?search=${searchText}`;
+    url = `http://localhost:8000/product?search=${searchText}`;
   }
   const response = await axios.get(url);
   return response.data;
@@ -34,11 +35,12 @@ function App() {
   const [products, setProducts] = useState([]);
   const [message, setMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     getCategories();
     getProducts();
-  }, [currentCategory]);
+  }, [currentCategory, loggedInUser]);
 
   const productAdded = () => {
     setCurrentCategory("reset");
@@ -76,16 +78,18 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {showAlert && (
+        {/* {showAlert && (
           <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
             {message}
           </Alert>
-        )}
+        )} */}
 
         <Navbar
           categories={categories}
           clickButton={clickButton}
           searchProduct={searchProduct}
+          loggedInUser={loggedInUser}
+          setLoggedInUser={setLoggedInUser}
         />
         <Routes>
           <Route path="/" element={(

@@ -1,52 +1,56 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
-function Navbar({ categories, clickButton, searchProduct }) {
-
+function Navbar({ categories, clickButton, searchProduct, loggedInUser, setLoggedInUser }) {
   const [searchText, setSearchText] = useState(""); // this is the value of the search field
-  const [loggedInUser, setLoggedInUser] = useState(false);
+  
   const location = useLocation();
   const hello_style = {
-    backgroundColor: 'blue',
-    color: 'white',
-    padding: '10px',
+    backgroundColor: "blue",
+    color: "white",
+    padding: "10px",
   };
   useEffect(() => {
     // Check for a token in local storage when the component mounts
-    const storedToken = localStorage.getItem('token');
+    
+  }, []); // The empty dependency array ensures this effect runs only once on mount
 
-    if (storedToken !== null ) {
+  const isConnected=()=>{
+    const storedToken = localStorage.getItem("token");
+    if(storedToken === null) return false
       // Decode the token to get the expiration time
       const decodedToken = jwtDecode(storedToken);
       const expirationTime = decodedToken.exp;
 
       // Get the current time in seconds
       const currentTime = Math.floor(Date.now() / 1000);
-      const user_id = decodedToken.user_id
+      const user_id = decodedToken.user_id;
       // Check if the token is expired
       const isTokenExpired = expirationTime < currentTime;
-       console.log("token expire"+isTokenExpired)
+      console.log("token expire" + isTokenExpired);
       // Update the loggedInUser state based on token expiration
-      if (isTokenExpired){
-        setLoggedInUser(null)
-        axios.defaults.headers.common['Authorization'] = null;
+      if (isTokenExpired) {
+        setLoggedInUser(null);
+        axios.defaults.headers.common["Authorization"] = null;
+        return false
       } else {
-        setLoggedInUser(user_id)
-        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-    }
-    }
-  }, []); // The empty dependency array ensures this effect runs only once on mount
+        setLoggedInUser(user_id);
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${storedToken}`;
+        return true
+      }
+  }
 
-  function logout(){
-    localStorage.removeItem('token');
-    setLoggedInUser(false)
+  function logout() {
+    localStorage.removeItem("token");
+    setLoggedInUser(null);
     // Reset Axios default headers
-    delete axios.defaults.headers.common['Authorization'];
-    alert('logged out')
-
+    delete axios.defaults.headers.common["Authorization"];
+    alert("logged out");
   }
   return (
     <>
@@ -87,21 +91,19 @@ function Navbar({ categories, clickButton, searchProduct }) {
             Add Product
           </Link>
         </li>
-        {loggedInUser && (
-            <>
-            <li className="navbar-text  ml-auto" style={hello_style}>Hello! {loggedInUser}</li>
-        <li className="nav-item  ml-auto">
-        <Link
-                  to="/login"
-                  className="nav-link"
-                  onClick={() => logout()}
-                >
-                  Logout
-                </Link>
-        </li>
-        </>
+        {isConnected()===true && (
+          <>
+            <li className="navbar-text  ml-auto" style={hello_style}>
+              Hello! {loggedInUser}
+            </li>
+            <li className="nav-item  ml-auto">
+              <Link to="/login" className="nav-link" onClick={() => logout()}>
+                Logout
+              </Link>
+            </li>
+          </>
         )}
-        {location.pathname === "/login" || loggedInUser ? null : (
+        {location.pathname === "/login" || isConnected() ===false && (
           <li className="nav-item">
             <Link className="mx-1 btn btn-success" to="/login">
               Login
