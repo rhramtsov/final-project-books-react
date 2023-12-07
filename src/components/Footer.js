@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -22,20 +23,12 @@ function Footer() {
               </Link>
             </li>
             <li className="nav-item">
-              <a
-                href="https://www.google.com"
-                className="nav-link px-2 text-muted"
-              >
-                Google
-              </a>
-            </li>
-            <li className="nav-item">
               <a href="/" className="nav-link px-2 text-muted">
-                About
+                Contact us
               </a>
             </li>
           </ul>
-          <p className="text-center text-muted">© 2022 Company, Inc</p>
+          <p className="text-center text-muted">© 2023 Company RM, Inc</p>
           {/* local image in public folder example */}
           <img src={process.env.PUBLIC_URL + "/logo192.png"} alt="logo" />
         </footer>
@@ -44,32 +37,5 @@ function Footer() {
   );
 }
 
-export default Footer;
-import React from 'react';
-import { Link } from 'react-router-dom'; // Make sure to import Link from react-router-dom
-
-function Footer() {
-  return (
-    <>
-      <div className="container">
-        <footer className="py-3 my-4">
-          <ul className="nav justify-content-center border-bottom pb-3 mb-3">
-            {/* Existing nav items */}
-            <li className="nav-item">
-              <Link to="/" className="nav-link px-2 text-muted">Home</Link>
-            </li>
-            {/* ... other items ... */}
-            <li className="nav-item">
-              <Link to="/contact-us" className="nav-link px-2 text-muted">Contact Us</Link>
-            </li>
-            {/* ... other items ... */}
-          </ul>
-          <p className="text-center text-muted">© 2022 Company, Inc</p>
-          <img src={process.env.PUBLIC_URL + "/logo192.png"} alt="logo" />
-        </footer>
-      </div>
-    </>
-  );
-}
 
 export default Footer;
