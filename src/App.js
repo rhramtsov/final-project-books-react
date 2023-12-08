@@ -107,6 +107,7 @@ function App() {
           )} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/add_product" element={<AddProduct productAdded={productAdded} />} />
