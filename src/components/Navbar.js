@@ -53,11 +53,41 @@ function Navbar({ categories, clickButton, searchProduct, loggedInUser, setLogge
     alert("logged out");
   }
   return (
+    
     <>
+      <ul className="nav my-4">
+          <li className="nav-item">
+            <Link to="/" className="nav-link">Home</Link>
+          </li>
+      </ul>
+
+      <ul className="nav my-4">
+          <li className="nav-item">
+            <Link to="art-books" className="nav-link">Art Books</Link>
+          </li>
+      </ul>
+
+      <ul className="nav my-4">
+          <li className="nav-item">
+            <Link to="fiction-books" className="nav-link">Fiction books</Link>
+          </li>
+      </ul>
+
+      <ul className="nav my-4">
+          <li className="nav-item">
+            <Link to="children-books" className="nav-link">Children books</Link>
+          </li>
+      </ul>
+
+      <ul className="nav my-4">
+          <li className="nav-item">
+            <Link to="all-books" className="nav-link">SALE</Link>
+          </li>
+      </ul>
       <ul className="nav my-4 ">
         <li className="nav-item">
           <Link to="/" className="nav-link" onClick={() => clickButton("")}>
-            All Products
+            All Books
           </Link>
         </li>
         {categories.map((category) => (

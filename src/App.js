@@ -10,6 +10,8 @@ import Register from "./components/Register";
 import Cart from "./components/Cart";
 import AddProduct from "./components/AddProduct";
 import ContactUs from "./components/ContactUs";
+import HomePage from "./components/HomePage";
+
 
 // Assuming you have a .env file with REACT_APP_API_URL set
 const API_URL = process.env.REACT_APP_API_URL;
@@ -24,6 +26,8 @@ const fetchProducts = async (category, searchText = null) => {
   let url = `http://localhost:8000/product?category=${category}`;
   if (searchText) {
     url = `http://localhost:8000/product?search=${searchText}`;
+    url = `http://localhost:8000/home?search=${searchText}`;
+
   }
   const response = await axios.get(url);
   return response.data;

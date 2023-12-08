@@ -5,7 +5,7 @@ const ContactUs = () => {
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
-    topic: 'The Book Store',
+    topic: 'The SicBook Store',
     subject: '',
   });
 
