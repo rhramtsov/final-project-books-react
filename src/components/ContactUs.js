@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // If you are using React Router
+import { Link } from 'react-router-dom'; 
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
-    topic: 'The SicBook Store',
+    topic: 'The Sicret Book Store',
     subject: '',
   });
 
