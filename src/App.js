@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Alert } from "react-router-dom";
 import Product from "./components/Product";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 import Login from "./components/Login";
 import NoPage from "./components/NoPage";
 import Footer from "./components/Footer";
@@ -11,13 +11,13 @@ import Cart from "./components/Cart";
 import AddProduct from "./components/AddProduct";
 import ContactUs from "./components/ContactUs";
 import HomePage from "./components/HomePage";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import SoundPlayer from "./components/soundPlayer";
 
 // Assuming you have a .env file with REACT_APP_API_URL set
 const API_URL = process.env.REACT_APP_API_URL;
 
 const fetchCategories = async () => {
-  debugger
   const response = await axios.get(`http://localhost:8000/category`);
   return response.data;
 };
@@ -27,7 +27,6 @@ const fetchProducts = async (category, searchText = null) => {
   if (searchText) {
     url = `http://localhost:8000/product?search=${searchText}`;
     url = `http://localhost:8000/home?search=${searchText}`;
-
   }
   const response = await axios.get(url);
   return response.data;
@@ -40,7 +39,8 @@ function App() {
   const [message, setMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-
+  const [playSound, setPlaySound] = useState(false);
+  console.log(playSound);
   useEffect(() => {
     getCategories();
     getProducts();
@@ -78,6 +78,9 @@ function App() {
     setCurrentCategory("reset");
     getProducts(searchText);
   };
+  const playAudio = () => {
+    setPlaySound(true);
+  };
 
   return (
     <>
@@ -88,31 +91,42 @@ function App() {
           </Alert>
         )} */}
 
-        <Navbar
+        <Header
           categories={categories}
           clickButton={clickButton}
           searchProduct={searchProduct}
           loggedInUser={loggedInUser}
           setLoggedInUser={setLoggedInUser}
+          setPlaySound={playAudio}
         />
         <Routes>
-          <Route path="/" element={(
-            <div className="row row-cols-1 row-cols-md-3 row-cols-lg-6 g-4">
-              {products.map((product) => (
-                <div key={product.id} className="col">
-                  <Product product={product} />
-                </div>
-              ))}
-            </div>
-          )} />
+          <Route
+            path="/"
+            element={
+              <div className="row row-cols-1 row-cols-md-3 row-cols-lg-6 g-4">
+                {products.map((product) => (
+                  <div key={product.id} className="col">
+                    <Product product={product} />
+                  </div>
+                ))}
+              </div>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/add_product" element={<AddProduct productAdded={productAdded} />} />
+          <Route
+            path="/add_product"
+            element={<AddProduct productAdded={productAdded} />}
+          />
           <Route path="*" element={<NoPage />} />
         </Routes>
+        <SoundPlayer
+          playSound={playSound}
+          onFinishedPlaying={() => setPlaySound(false)}
+        />
         <Footer />
       </BrowserRouter>
     </>
