@@ -66,9 +66,11 @@ function App() {
   };
 
   const getProducts = async (searchText = null) => {
+    debugger;
     try {
       const data = await fetchProducts(currentCategory, searchText);
       setProducts(data);
+      
     } catch (error) {
       console.error("Error fetching products:", error);
     }

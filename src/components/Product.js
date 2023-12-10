@@ -1,12 +1,14 @@
+import React from "react"
+
 function Product({ product }) {
+  console.log(product)
   return (
     <>
       {/* <li>
         {product.name} - {product.price} - {product.category}
       </li> */}
       <div className="card" style={{ width: "18rem" }}>
-        <img
-          src={"https://picsum.photos/268/180?random=" + product.id}
+        <img src={product.img}
           className="card-img-top"
           alt="..."
         />

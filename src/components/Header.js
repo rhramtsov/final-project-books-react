@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import React,{ useEffect, useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import { jwtDecode } from "jwt-decode";
@@ -136,7 +136,7 @@ function Header({
           <Navbar.Brand href="#home">
             <img src={logo} alt="logo" width="100" height="50" />{" "}
           </Navbar.Brand>
-          {isConnectedUser ? (
+          {isConnected ? (
             <Nav className="me-auto">
               {data.map((item) => (
                 <>
