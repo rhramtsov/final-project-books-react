@@ -41,7 +41,7 @@ function Footer() {
           </li>
         </ul>
         <p className="text-center text-muted">© 2023 Company RM, Inc</p>
-        {/* local image in public folder example */}
+      
       </footer>
     </div>
   );

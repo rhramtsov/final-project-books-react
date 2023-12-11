@@ -1,3 +1,91 @@
 .nav-link:hover {
-  color: #ee1212 !important;
+  color: #6b0707 !important;
+  font-weight: bold; 
+  font-size: 20px; 
+
+}
+.nav-link {
+  color: #032912; 
+  font-size: 22px; 
+  font-weight: bold; 
+
+}
+@media (max-width: 768px) {
+  .nav-link {
+    padding: 20px;
+    text-align: left
+
+  }}
+
+.custom-list-group .list-group-item {
+  background-color: rgba(65, 36, 6, 0.5); /* semi-transparent white */
+  border: none;
+  color: #a9f7d1; 
+  font-weight: bold;
+
+}
+
+.custom-list-group {
+  border-radius: 15px; /* Rounded corners for the container */
+  overflow: hidden; /* Ensures the inner items don't overflow the rounded corners */
+
+}
+
+.custom-list-group .list-group-item a {
+  color: inherit; /* Inherits the color from the list group item */
+}
+
+.custom-list-group .list-group-item:hover {
+  background-color: rgba(255, 255, 255, 0.7); /* slightly more opaque on hover */
+}
+
+.gradient-outlined-text {
+  background: linear-gradient(45deg, #ff6a00, #15060a); /* Gradient colors */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Make the text color transparent */
+  display: inline-block; /* Necessary for some browsers */
+  font-weight: bold;
+
+  /* Outline effect */
+  text-shadow: 
+    /* -1px -1px 0 #f88f49,   */
+     /* 1px -1px 0 #443434, */
+    -1px  1px 0 #d7c41b,
+     1px  1px 0 #871f14;
+       font-weight: bold;
+}
+
+
+.gradient-texth2 {
+  background: linear-gradient(45deg, #ff6a00, #150606); /* Define your gradient colors */
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-weight: bold; 
+  color: transparent; /* Make the text color transparent */
+  display: inline-block; 
+  
+}
+
+.gradient-textp1 {
+  background: linear-gradient(45deg, #ff6a00, #a9f7d1); 
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 20px; 
+  font-weight: bold; 
+  color: transparent; /* Make the text color transparent */
+  display: inline-block; /* Necessary for some browsers */
+}
+
+.p2 {
+
+  font-size: 16px; 
+  font-weight: bold; 
+  color: #032912;
+}
+.p3 {
+
+  font-size: 16px; 
+  font-weight: bold; 
+  color: #f5be7f;
 }
