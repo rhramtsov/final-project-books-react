@@ -8,16 +8,17 @@ import NoPage from "./components/NoPage";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Cart from "./components/Cart";
-import AddProduct from "./components/AddProduct";
+// import AddProduct from "./components/AddProduct";
 import ContactUs from "./components/ContactUs";
 import HomePage from "./components/HomePage";
 import Artbooks from "./components/Artbooks";
 import ChildrenBooks from "./components/ChildrenBooks";
 import FictionBooks from "./components/FictionBooks";
+import Sale from "./components/Sale";
+import AllBooks from "./components/AllBooks";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from 'react-bootstrap/Alert';
 import SoundPlayer from "./components/soundPlayer";
-
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -36,6 +37,7 @@ const fetchProducts = async (category, searchText = null) => {
   return response.data;
 };
 
+
 function App() {
   const [categories, setCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(1);
@@ -44,12 +46,13 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [playSound, setPlaySound] = useState(false);
+  
   console.log(playSound);
   useEffect(() => {
     getCategories();
     getProducts();
   }, [currentCategory, loggedInUser]);
-
+ 
   const productAdded = () => {
     setCurrentCategory("reset");
     setMessage("Product Added Successfully");
@@ -124,10 +127,11 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/art-books" element={<Artbooks/>}/>
-          <Route
-            path="/add_product"
-            element={<AddProduct productAdded={productAdded} />}
-          />
+          <Route path="/fiction-books" element={<FictionBooks/>}/>
+          <Route path="/children-books" element={<ChildrenBooks/>}/>
+          <Route path="/sale" element={<Sale/>}/>
+          <Route path="/all-books" element={<AllBooks/>}/>
+      
           <Route path="*" element={<NoPage />} />
         </Routes>
         <SoundPlayer

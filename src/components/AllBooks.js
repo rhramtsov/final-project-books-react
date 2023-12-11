@@ -2,33 +2,22 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Card, Button, Modal } from 'react-bootstrap';
 import './styles.css';
-import { useParams } from 'react-router-dom';
 
 
-const FictionBooks = () => {
+const AllBooks = () => {
   const [clicked, setClicked] = useState(null);
   const [books, setBooks] = useState([]);
 
   function getAllBooks() {
-  
-    axios.get("http://localhost:8000/fiction-books")
+    axios.get("http://localhost:8000/art-books")
       .then(response => {
-      
-        for(let data of response.data){
-          if ((data.categories.includes(8) && data.categories.includes(10)) || 
-          (data.categories.includes(8) && data.categories.length === 1)) {
-          setBooks(books => [...books, data]);
-      }           
-       
-
-        }
-     
+        setBooks(response.data);
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
   }
-console.log(books);
+
   useEffect(() => {
     getAllBooks();
   }, []);
@@ -40,7 +29,6 @@ console.log(books);
   const handleClose = () => {
     setClicked(null);
   };
-
   const BookCard=({data})=>{
 
     const hasPromotion=data.categories.includes(10);
@@ -99,5 +87,5 @@ console.log(books);
   );
 }
 
-export default FictionBooks;
+export default AllBooks;
 

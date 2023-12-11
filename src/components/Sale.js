@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Card, Button, Modal } from 'react-bootstrap';
 import './styles.css';
-import { useParams } from 'react-router-dom';
 
 
-const FictionBooks = () => {
+const Sale = () => {
   const [clicked, setClicked] = useState(null);
   const [books, setBooks] = useState([]);
+  const [cart,setCart]=useState([])
 
   function getAllBooks() {
   
@@ -15,8 +15,8 @@ const FictionBooks = () => {
       .then(response => {
       
         for(let data of response.data){
-          if ((data.categories.includes(8) && data.categories.includes(10)) || 
-          (data.categories.includes(8) && data.categories.length === 1)) {
+          if ( data.categories.includes(10)) 
+ {
           setBooks(books => [...books, data]);
       }           
        
@@ -28,7 +28,37 @@ const FictionBooks = () => {
         console.error("Error fetching data:", error);
       });
   }
-console.log(books);
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error("Error parsing cart from localStorage:", error);
+        // Optionally clear or reset the cart in localStorage if it's corrupt
+        // localStorage.setItem('cart', JSON.stringify([]));
+      }
+    }
+  }, []);
+
+  useEffect(()=>{
+    localStorage.setItem('cart',JSON.stringify(cart))
+  },[cart])
+
+  const AddToCart = (book) => {
+          const existingItem = cart.find(item => item.id === book.id);
+          if (existingItem) {
+  
+              setCart(cart.map(item => 
+                  item.id === book.id ? { ...item, quantity: item.quantity + 1 } : item
+              ));
+          } else {
+        
+              setCart([...cart, { ...book, quantity: 1 }]);
+          }
+      };
+
   useEffect(() => {
     getAllBooks();
   }, []);
@@ -58,7 +88,7 @@ console.log(books);
           <Card.Title>{data.name}</Card.Title>
           <Card.Text>Stock {data.stock}</Card.Text>
           <Card.Text>Price {data.price}</Card.Text>
-          <Button variant="primary">Add to Cart</Button>
+          <Button variant="primary" onClick={()=>AddToCart(data)}>Add to Cart</Button>
         </Card.Body>
       </Card>
 
@@ -73,7 +103,10 @@ console.log(books);
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Close</Button>
-          <Button variant="primary">Add to Cart</Button>
+          <Button variant="primary" onClick={(e) => {
+  e.stopPropagation();
+  AddToCart(data);
+}}>Add to Cart</Button>
         </Modal.Footer>
       </Modal>
     </React.Fragment>
@@ -90,14 +123,14 @@ console.log(books);
 
      <center> <Container>
         <Row>
-          {books.map((data) => (
-         <BookCard data={data}/>
-          ))}
+        {books.map((data) => (
+  <BookCard key={data.id} data={data}/>
+))}
         </Row>
       </Container></center>
     </div>
   );
 }
 
-export default FictionBooks;
+export default Sale;
 

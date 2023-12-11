@@ -63,7 +63,7 @@ const Login = () => {
               style={{ width: '100%', borderRadius: "5px" }}
             />
           </div>
-          <button type="submit" style={{ width: '100%' }}>Login</button>
+          <button type="submit" style={{ width: '100%', backgroundColor:"#febb04" }}>Login</button>
         </form>
         {error && <p>{error}</p>}
       </center>

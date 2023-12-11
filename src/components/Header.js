@@ -10,7 +10,7 @@ import logo from "../assets/images/logo.jpeg";
 import back from "../assets/images/back.jpeg";
 import "./styles.css";
 
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form, FormControl,Row,Col } from "react-bootstrap";
 function Header({
   categories,
   clickButton,
@@ -192,16 +192,30 @@ function Header({
                   Logout
                 </a>
               </Nav.Link>
-              <Form >
-                <FormControl
-                type="text"
-                placeholder="sreach"
-                className="mr-2"
-                value={searchText}
-                onChange={(e)=>setSearchText(e.target.value)}
-                />
-                <Button >Sreach</Button>
-              </Form>
+              <Nav.Link>
+          <Link
+            to="/cart"
+            className="nav-link"
+            onClick={() => setPlaySound(true)}
+          >
+            <BsCart4 className="carticon" /> {/* Add the BsCart4 icon here */}
+          </Link>
+          </Nav.Link>
+              <Form inline>
+          <Row>
+           <Col xs="auto">
+            <Form.Control
+              type="text"
+              placeholder="Search"
+              className=" mr-sm-2"
+            />
+          </Col>
+          <Col xs="auto">
+            <Button type="submit">Submit</Button>
+          </Col>
+        </Row>
+      </Form>
+      
             </Nav>
           ) : (
             <Nav className="me-auto">
@@ -235,13 +249,7 @@ function Header({
               </Nav.Link>
             </Nav>
           )}
-          <Link
-            to="/cart"
-            className="nav-link"
-            onClick={() => setPlaySound(true)}
-          >
-            <BsCart4 className="carticon" /> {/* Add the BsCart4 icon here */}
-          </Link>
+      
         </Container>
       </Navbar>
     </div>
