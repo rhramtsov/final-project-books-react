@@ -71,8 +71,6 @@ function HomePage() {
 
         <Row className="justify-content-md-center mt-4">
           <Col md={8} className="text-center">
-            <h2 class="p3">Get in Touch</h2>
-            <p class= "p2">Have any questions or need assistance? Don't hesitate to <Link to="/contact-us">contact us</Link>.</p>
           </Col>
         </Row>
       </Container>

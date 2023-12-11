@@ -8,8 +8,6 @@ import NoPage from "./components/NoPage";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Cart from "./components/Cart";
-// import AddProduct from "./components/AddProduct";
-import ContactUs from "./components/ContactUs";
 import HomePage from "./components/HomePage";
 import Artbooks from "./components/Artbooks";
 import ChildrenBooks from "./components/ChildrenBooks";
@@ -123,7 +121,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/contactus" element={<ContactUs />} />
           <Route path="/art-books" element={<Artbooks/>}/>
           <Route path="/fiction-books" element={<FictionBooks/>}/>
           <Route path="/children-books" element={<ChildrenBooks/>}/>

@@ -34,11 +34,6 @@ function Footer() {
               Register
             </Link>
           </li>
-          <li className="nav-item">
-            <a href="/" className="nav-link px-2 text-muted">
-              Contact us
-            </a>
-          </li>
         </ul>
         <p className="text-center text-muted">© 2023 Company RM, Inc</p>
       
