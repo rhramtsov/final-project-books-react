@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import back from "../assets/images/back.jpeg";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -18,54 +18,55 @@ const Login = () => {
         password: password,
       });
 
-      // Assuming the server responds with a JWT token in the 'token' field of the response
       const token = response.data.access;
-
-      // Save the token to Axios defaults
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      // Save the token to local storage
       localStorage.setItem("token", token);
-      let decoded = jwtDecode(token);
-
-      // Handle successful login, e.g., redirect to a new page
       console.log("Login successful", response.data);
-      alert("login succesful");
-      window.location.reload()
+      alert("Login successful");
+      window.location.reload();
       navigate("/");
-     
     } catch (error) {
-      // Handle login error, e.g., display an error message
       console.error("Login failed", error.response.data);
-      setError("username or/and password incorrect")
+      setError("Username or password incorrect");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            onChange={(e)=>setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            onChange={(e)=>setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Login</button>
-      </form>
-      {error}
+    <div style={{
+      backgroundImage: `url(${back})`,
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      padding: "20px"
+    }}>
+      <center>
+        <h2 className="gradient-outlined-textheder">Please Login</h2>
+        <form onSubmit={handleSubmit} style={{ width: '300px' }}>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', marginBottom: '5px' }}>
+              Username:
+            </label>
+            <input
+              type="text"
+              name="username"
+              onChange={(e) => setUsername(e.target.value)}
+              style={{ width: '100%', borderRadius: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', marginBottom: '5px' }}>
+              Password:
+            </label>
+            <input
+              type="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ width: '100%', borderRadius: "5px" }}
+            />
+          </div>
+          <button type="submit" style={{ width: '100%' }}>Login</button>
+        </form>
+        {error && <p>{error}</p>}
+      </center>
     </div>
   );
 };

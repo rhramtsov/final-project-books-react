@@ -20,10 +20,9 @@ const ContactUs = () => {
   };
 
   return (
-    <div style={{ backgroundImage: "url('/media/backpichome.jpg')" }}>
-      {/* Your navbar here */}
+    <div style={{ backgroundColor: "#d2b7ac" }}>
+    <center> <h1 className='gradient-textp1art'>Lats sty in touch Contact us</h1></center>
       
-      <h1 style={{ color: 'rgb(220, 232, 242)' }}>We want to be in touch</h1>
 
       <div className="container" style={{ paddingTop: '80px' }}>
         {/* Display messages here */}

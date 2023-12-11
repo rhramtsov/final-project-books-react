@@ -44,7 +44,7 @@ const Artbooks = () => {
                   <Card.Title>{data.name}</Card.Title>
                   <Card.Text>Stock {data.stock}</Card.Text>
                   <Card.Text>Price {data.price}</Card.Text>
-                  <Button variant="primary">Go somewhere</Button>
+                  <Button variant="primary">Add to Cart</Button>
                 </Card.Body>
               </Card>
 

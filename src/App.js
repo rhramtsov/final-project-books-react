@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, Alert } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Product from "./components/Product";
 import Header from "./components/Header";
 import Login from "./components/Login";
@@ -12,10 +12,13 @@ import AddProduct from "./components/AddProduct";
 import ContactUs from "./components/ContactUs";
 import HomePage from "./components/HomePage";
 import Artbooks from "./components/Artbooks";
+import ChildrenBooks from "./components/ChildrenBooks";
+import FictionBooks from "./components/FictionBooks";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Alert from 'react-bootstrap/Alert';
 import SoundPlayer from "./components/soundPlayer";
 
-// Assuming you have a .env file with REACT_APP_API_URL set
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 const fetchCategories = async () => {
@@ -88,12 +91,12 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {/* {showAlert && (
+        {showAlert && (
           <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
             {message}
           </Alert>
-        )} */}
-
+        )}
+      
         <Header
           categories={categories}
           clickButton={clickButton}

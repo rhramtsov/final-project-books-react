@@ -34,8 +34,8 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Please Register</h2>
+    <div style={{ backgroundColor: "#d2b7ac" }}>
+    <center> <h2 className='gradient-outlined-textheder'>Please Register</h2></center>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

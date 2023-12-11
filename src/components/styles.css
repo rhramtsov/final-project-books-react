@@ -1,5 +1,5 @@
 .nav-link:hover {
-  color: #6b0707 !important;
+  color: #febb04 !important;
   font-weight: bold; 
   font-size: 20px; 
 
@@ -74,7 +74,7 @@
   text-shadow: 
     /* -1px -1px 0 #f88f49,   */
      /* 1px -1px 0 #443434, */
-    -1px  1px 0 #d7c41b,
+    -1px  1px 0 #febb04,
      1px  1px 0 #871f14;
        font-weight: bold;
 }
@@ -92,7 +92,7 @@
   text-shadow: 
     /* -1px -1px 0 #f88f49,   */
      /* 1px -1px 0 #443434, */
-    -1px  1px 0 #d7c41b,
+    -1px  1px 0 #febb04,
      1px  1px 0 #871f14;
        font-weight: bold;
 }
@@ -135,11 +135,29 @@
   color: transparent; /* Make the text color transparent */
   display: inline-block; /* Necessary for some browsers */
 }
+
+.gradient-outlined-textheder {
+  background: linear-gradient(45deg, #000000, #15060a); /* Gradient colors */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; 
+  display: inline-block; 
+  font-weight: bold;
+  font-size: 33px;
+
+  /* Outline effect */
+  text-shadow: 
+    /* -1px -1px 0 #f88f49,   */
+     /* 1px -1px 0 #443434, */
+    -1px  1px 0 #febb04,
+     1px  1px 0 #871f14;
+       font-weight: bold;
+}
 .p2 {
 
   font-size: 16px; 
   font-weight: bold; 
-  color: #032912;
+  color: #f5be7f;
 }
 .p3 {
 

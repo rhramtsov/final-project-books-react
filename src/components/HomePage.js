@@ -34,7 +34,7 @@ function HomePage() {
 
         <Row className="justify-content-md-center mt-4">
           <Col md={8}>
-            <h2 class="gradient-texth2">Browse Our Collections</h2>
+            <h2 class="gradient-texth2">Loging and Browse Our Collections</h2>
             <ListGroup variant="flush" className="text-center custom-list-group">
               <ListGroup.Item><Link to="/all-books">All Books</Link></ListGroup.Item>
               <ListGroup.Item><Link to="/art-books">Art Books</Link></ListGroup.Item>

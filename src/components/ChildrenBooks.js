@@ -71,5 +71,5 @@ const ChildrenBooks = () => {
   );
 }
 
-export default Artbooks;
+export default ChildrenBooks;
 
