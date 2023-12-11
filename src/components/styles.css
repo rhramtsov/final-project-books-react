@@ -10,6 +10,16 @@
   font-weight: bold; 
 
 }
+.large-card {
+  width: 250px !important;
+  margin: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.large-card:hover,
+.large-card.clicked {
+  transform: scale(1.05);
+}
 @media (max-width: 768px) {
   .nav-link {
     padding: 20px;
@@ -46,6 +56,12 @@
   background-color: rgba(255, 255, 255, 0.7); /* slightly more opaque on hover */
 }
 
+.carticon {
+  color: (45deg, #f8da13, #e79209);
+  height: 37px;
+  font-size: 1em;
+  width: fit-content;
+}
 .gradient-outlined-text {
   background: linear-gradient(45deg, #ff6a00, #15060a); /* Gradient colors */
   -webkit-background-clip: text;

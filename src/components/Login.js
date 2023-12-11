@@ -31,7 +31,9 @@ const Login = () => {
       // Handle successful login, e.g., redirect to a new page
       console.log("Login successful", response.data);
       alert("login succesful");
+      window.location.reload()
       navigate("/");
+     
     } catch (error) {
       // Handle login error, e.g., display an error message
       console.error("Login failed", error.response.data);

@@ -1,5 +1,5 @@
 import React,{ useEffect, useState, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
@@ -9,6 +9,8 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/images/logo.jpeg";
 import back from "../assets/images/back.jpeg";
 import "./styles.css";
+
+import { Button, Form, FormControl } from "react-bootstrap";
 function Header({
   categories,
   clickButton,
@@ -48,9 +50,11 @@ function Header({
       title: "Sale",
       link: "/sale",
     },
+    
   ];
   const [searchText, setSearchText] = useState(""); // this is the value of the search field
   const [isConnectedUser, setIsConnectedUser] = useState(false); // this is the value of the search field
+  const[loginUser,setLoginUSer]=useState(null)
   const navbarRef = useRef(null);
   const location = useLocation();
   const hello_style = {
@@ -58,7 +62,10 @@ function Header({
     color: "white",
     padding: "10px",
   };
+  const navigate=useNavigate()
+  const token=localStorage.getItem("token")
   useEffect(() => {
+ 
     let lastScrollTop = 0;
 
     window.addEventListener("scroll", function () {
@@ -102,14 +109,18 @@ function Header({
     // Check if the token is expired
     const isTokenExpired = expirationTime < currentTime;
     console.log("token expire" + isTokenExpired);
+   debugger;
     // Update the loggedInUser state based on token expiration
     if (isTokenExpired) {
       setLoggedInUser(null);
+
       axios.defaults.headers.common["Authorization"] = null;
+      setIsConnectedUser(false)
       return false;
     } else {
       setLoggedInUser(user_id);
       axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+      setIsConnectedUser(true)
       return true;
     }
   };
@@ -117,27 +128,47 @@ function Header({
   function logout() {
     localStorage.removeItem("token");
     setLoggedInUser(null);
+    setLoginUSer(false)
     // Reset Axios default headers
+    isConnected()
     delete axios.defaults.headers.common["Authorization"];
     alert("logged out");
   }
+  useEffect(()=>{
+ 
+    if(token){
+      setIsConnectedUser(true)
+     
+      
+    }else{
+      setIsConnectedUser(false)
+      if(loginUser===false)
+      {
+        navigate('./home')
+      }
+   
+    }
+  },[loginUser])
+  console.log(isConnected)
   return (
     <div>
       <Navbar
         style={{
           backgroundImage: `url(${back})`,
           backgroundSize: "fit",
+       
+
         }}
         bg="light"
         data-bs-theme="light"
         ref={navbarRef}
       >
         <Container>
+
           <Navbar.Brand href="#home">
-            <h2 class="gradient-outlined-text">THE SECRET BOOK STORE</h2>
-            {/* <img src={logo} alt="logo" width="100" height="50" />{" "} */}
+            <h2 className="gradient-outlined-text">THE SECRET BOOK STORE</h2>
           </Navbar.Brand>
-          {isConnected ? (
+          {isConnectedUser? (
             <Nav className="me-auto">
               {data.map((item) => (
                 <>
@@ -153,6 +184,24 @@ function Header({
                   </Nav.Link>
                 </>
               ))}
+              <Nav.Link>
+                <a
+                   className="nav-link"
+                   onClick={logout}
+                >
+                  Logout
+                </a>
+              </Nav.Link>
+              <Form >
+                <FormControl
+                type="text"
+                placeholder="sreach"
+                className="mr-2"
+                value={searchText}
+                onChange={(e)=>setSearchText(e.target.value)}
+                />
+                <Button >Sreach</Button>
+              </Form>
             </Nav>
           ) : (
             <Nav className="me-auto">
@@ -191,7 +240,7 @@ function Header({
             className="nav-link"
             onClick={() => setPlaySound(true)}
           >
-            <BsCart4 /> {/* Add the BsCart4 icon here */}
+            <BsCart4 className="carticon" /> {/* Add the BsCart4 icon here */}
           </Link>
         </Container>
       </Navbar>

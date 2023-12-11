@@ -11,6 +11,7 @@ import Cart from "./components/Cart";
 import AddProduct from "./components/AddProduct";
 import ContactUs from "./components/ContactUs";
 import HomePage from "./components/HomePage";
+import Artbooks from "./components/Artbooks";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SoundPlayer from "./components/soundPlayer";
 
@@ -66,7 +67,7 @@ function App() {
   };
 
   const getProducts = async (searchText = null) => {
-    debugger;
+
     try {
       const data = await fetchProducts(currentCategory, searchText);
       setProducts(data);
@@ -119,6 +120,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/art-books" element={<Artbooks/>}/>
           <Route
             path="/add_product"
             element={<AddProduct productAdded={productAdded} />}
