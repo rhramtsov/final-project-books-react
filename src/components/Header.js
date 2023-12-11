@@ -64,6 +64,9 @@ function Header({
   };
   const navigate=useNavigate()
   const token=localStorage.getItem("token")
+  const handleSearchInputChange = (e) => {
+    setSearchText(e.target.value);
+  };
   useEffect(() => {
  
     let lastScrollTop = 0;
@@ -93,7 +96,9 @@ function Header({
       window.removeEventListener("scroll", () => {});
     };
   }, []); // The empty dependency array ensures this effect runs only once on mount
-
+  const handleSearchSubmit = () => {
+    searchProduct(searchText); // Pass searchText to the searchProduct function
+  };
   const isConnected = () => {
     const storedToken = localStorage.getItem("token");
 
@@ -131,6 +136,7 @@ function Header({
     setLoginUSer(false)
     // Reset Axios default headers
     isConnected()
+    localStorage.removeItem('user')
     delete axios.defaults.headers.common["Authorization"];
     alert("logged out");
   }
@@ -139,7 +145,7 @@ function Header({
     if(token){
       setIsConnectedUser(true)
      
-      
+      navigate('./home')
     }else{
       setIsConnectedUser(false)
       if(loginUser===false)
@@ -202,18 +208,20 @@ function Header({
           </Link>
           </Nav.Link>
               <Form inline>
-          <Row>
-           <Col xs="auto">
-            <Form.Control
-              type="text"
-              placeholder="Search"
-              className=" mr-sm-2"
-            />
-          </Col>
-          <Col xs="auto">
-            <Button type="submit">Submit</Button>
-          </Col>
-        </Row>
+              <Row>
+      <Col xs="auto">
+        <Form.Control
+          type="text"
+          placeholder="Search"
+          className="mr-sm-2"
+          value={searchText}
+          onChange={handleSearchInputChange}
+        />
+      </Col>
+      <Col xs="auto">
+        <Button onClick={handleSearchSubmit}>Search</Button>
+      </Col>
+    </Row>
       </Form>
       
             </Nav>

@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./styles.css";
+import { Link, useNavigate } from "react-router-dom";
 
 function Cart() {
+  const navigate=useNavigate()
   const [cart, setCart] = useState(null); // Initialize cart to null
 
   // Fetch cart from server or localStorage
   useEffect(() => {
-    // Function to load cart
-    const loadCart = async () => {
-      const savedCart = localStorage.getItem("cart");
-      if (savedCart) {
-        // Load cart from local storage
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
         setCart(JSON.parse(savedCart));
-      } else {
-        try {
-          // Fetch cart from server
-          const response = await axios.get("http://localhost:8000/cartitems");
-          setCart(response.data);
-          localStorage.setItem("cart", JSON.stringify(response.data)); // Save fetched cart to local storage
-        } catch (error) {
-          console.error("Error fetching data:", error);
-          setCart([]); // Set cart to empty array in case of error
-        }
+      } catch (error) {
+        console.error("Error parsing cart from localStorage:", error);
+        // Optional: Clear or reset the cart in localStorage if it's corrupt
+        // localStorage.setItem('cart', JSON.stringify([]));
       }
-    };
-
-    loadCart();
+    }
   }, []);
 
   // Update local storage when the cart changes
@@ -36,10 +28,13 @@ function Cart() {
     }
   }, [cart]);
 
-  const updateQuantity = (index, newQuantity) => {
-    setCart(currentCart => currentCart.map((item, idx) => 
-      idx === index ? { ...item, quantity: newQuantity } : item
-    ));
+  const updateQuantity = (itemId, newQuantity) => {
+  
+    setCart(currentCart => {
+      return currentCart.map(item => 
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      );
+    });
   };
 
   const deleteItem = (indexToDelete) => {
@@ -64,9 +59,9 @@ function Cart() {
           <li key={index} className="cart-item">
             Name: {item.name}, Price: {item.price}$
             <div>
-              <button onClick={() => updateQuantity(index, item.quantity + 1)}>+</button>
+            <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
               {item.quantity}
-              <button onClick={() => updateQuantity(index, item.quantity - 1)}>-</button>
+              <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
               <button onClick={() => deleteItem(index)} className="delete-button">Delete</button>
             </div>
           </li>
@@ -77,6 +72,8 @@ function Cart() {
         <p>Items in Cart: {itemCount}</p>
         <p>Total Price: {totalPrice.toFixed(2)}$</p>
       </div>
+      <br/>
+      <button><Link to={"/home"}> Back to shopping</Link></button>
     </div>
   );
 }

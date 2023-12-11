@@ -73,17 +73,15 @@ function App() {
   };
 
   const getProducts = async (searchText = null) => {
-
     try {
       const data = await fetchProducts(currentCategory, searchText);
       setProducts(data);
-      
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
-
   const searchProduct = (searchText) => {
+    debugger
     setCurrentCategory("reset");
     getProducts(searchText);
   };

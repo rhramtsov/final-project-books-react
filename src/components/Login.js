@@ -22,7 +22,8 @@ const Login = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       localStorage.setItem("token", token);
       console.log("Login successful", response.data);
-      alert("Login successful");
+      alert("Login successful ");
+      localStorage.setItem("user",username)
       window.location.reload();
       navigate("/");
     } catch (error) {
