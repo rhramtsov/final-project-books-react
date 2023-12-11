@@ -22,7 +22,9 @@ function HomePage() {
       >
         <Row className="justify-content-md-center">
           <Col md={8} className="text-left">
-            <h1 class="gradient-outlined-text">Welcome to The Secret Book Store</h1>
+            <h1 class="gradient-text-1">Welcome my frind to</h1>
+            <h1 class="gradient-outlined-text">THE SECRECT BOOK STORE</h1>
+
             <p class="gradient-textp1">
               Here you can find an extensive collection of books across various
               genres.

@@ -134,7 +134,8 @@ function Header({
       >
         <Container>
           <Navbar.Brand href="#home">
-            <img src={logo} alt="logo" width="100" height="50" />{" "}
+            <h2 class="gradient-outlined-text">THE SECRET BOOK STORE</h2>
+            {/* <img src={logo} alt="logo" width="100" height="50" />{" "} */}
           </Navbar.Brand>
           {isConnected ? (
             <Nav className="me-auto">

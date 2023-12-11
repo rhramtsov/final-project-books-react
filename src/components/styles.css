@@ -17,8 +17,15 @@
 
   }}
 
+  .nav-item {
+    color: rgba(65, 36, 6, 0.5); 
+    font-size: 22px; 
+    font-weight: bold; 
+  
+
+  }
 .custom-list-group .list-group-item {
-  background-color: rgba(65, 36, 6, 0.5); /* semi-transparent white */
+  background-color: rgba(246, 239, 232, 0.5); /* semi-transparent white */
   border: none;
   color: #a9f7d1; 
   font-weight: bold;
@@ -66,7 +73,15 @@
   display: inline-block; 
   
 }
-
+.gradient-text-1 {
+  background: linear-gradient(45deg, #f8da13, #e79209); /* Define your gradient colors */
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-weight: bold; 
+  color: transparent; /* Make the text color transparent */
+  display: inline-block; 
+  
+}
 .gradient-textp1 {
   background: linear-gradient(45deg, #ff6a00, #a9f7d1); 
   -webkit-background-clip: text;
