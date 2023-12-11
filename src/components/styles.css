@@ -79,6 +79,23 @@
        font-weight: bold;
 }
 
+.gradient-outlined-textnav {
+  background: linear-gradient(45deg, #ff6a00, #15060a); /* Gradient colors */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; 
+  display: inline-block; 
+  font-weight: bold;
+  font-size: 17px;
+
+  /* Outline effect */
+  text-shadow: 
+    /* -1px -1px 0 #f88f49,   */
+     /* 1px -1px 0 #443434, */
+    -1px  1px 0 #d7c41b,
+     1px  1px 0 #871f14;
+       font-weight: bold;
+}
 
 .gradient-texth2 {
   background: linear-gradient(45deg, #ff6a00, #150606); /* Define your gradient colors */
@@ -108,6 +125,16 @@
   display: inline-block; /* Necessary for some browsers */
 }
 
+.gradient-textp1art {
+  background: linear-gradient(45deg, #060300, #a9f7d1); 
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 30px; 
+  text-align: center;
+  font-weight: bold; 
+  color: transparent; /* Make the text color transparent */
+  display: inline-block; /* Necessary for some browsers */
+}
 .p2 {
 
   font-size: 16px; 

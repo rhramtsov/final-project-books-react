@@ -166,7 +166,7 @@ function Header({
         <Container>
 
           <Navbar.Brand href="#home">
-            <h2 className="gradient-outlined-text">THE SECRET BOOK STORE</h2>
+            <h2 className="gradient-outlined-textnav">THE SECRET<p></p> BOOK STORE</h2>
           </Navbar.Brand>
           {isConnectedUser? (
             <Nav className="me-auto">
