@@ -6,7 +6,6 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import logo from "../assets/images/logo.jpeg";
 import back from "../assets/images/back.jpeg";
 import "./styles.css";
 
