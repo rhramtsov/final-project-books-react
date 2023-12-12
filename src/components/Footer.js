@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Footer() {
-  const emailAddress = "r.hramtsov@gmail.com"; 
+  const emailAddress = "r.hramtsov@gmail.com"; // Set the desired email address here
+  const emailSubject = encodeURIComponent("The Secret Book Store");
 
   return (
     <div
@@ -37,7 +38,7 @@ function Footer() {
             </Link>
           </li>
           <li className="nav-item">
-            <a href={`mailto:${emailAddress}`} className="nav-link px-2 text-muted">
+            <a href={`mailto:${emailAddress}?subject=${emailSubject}`} className="nav-link px-2 text-muted">
               Contact Us
             </a>
           </li>
