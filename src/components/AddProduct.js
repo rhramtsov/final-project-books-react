@@ -1,9 +1,9 @@
-// import React from "react"
+import React from "react"
 
-// function AddProduct({ productAdded }) {
-//     return(
-// <></>  
-//     )
+function AddProduct({ productAdded }) {
+    return(
+<></>  
+    )
 
-// }
-// export default AddProduct;
+}
+export default AddProduct;
