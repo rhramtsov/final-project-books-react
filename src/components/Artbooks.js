@@ -3,30 +3,47 @@ import axios from 'axios';
 import { Container, Row, Card, Button, Modal } from 'react-bootstrap';
 import './styles.css';
 
-const Artbooks = () => {
+const ArtBooks = () => {
   const [clicked, setClicked] = useState(null);
   const [books, setBooks] = useState([]);
+  const [cart, setCart] = useState([]);
 
   function getAllBooks() {
     axios.get("http://localhost:8000/art-books")
       .then(response => {
-        const uniqueBooks = getUniqueBooksByName(response.data);
-        setBooks(uniqueBooks);
+        setBooks(response.data.filter(data => data.categories.includes(9)));
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
   }
 
-  function getUniqueBooksByName(booksArray) {
-    const unique = {};
-    booksArray.forEach(book => {
-      if (book.categories.includes(9)) {
-        unique[book.name] = book;
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error("Error parsing cart from localStorage:", error);
       }
-    });
-    return Object.values(unique);
-  }
+    }
+  }, []);
+
+  const AddToCart = (book) => {
+    let currentCart = localStorage.getItem('cart');
+    currentCart = currentCart ? JSON.parse(currentCart) : [];
+    
+    const existingItemIndex = currentCart.findIndex(item => item.id === book.id);
+    
+    if (existingItemIndex !== -1) {
+      currentCart[existingItemIndex].quantity += 1;
+    } else {
+      currentCart.push({ ...book, quantity: 1 });
+    }
+  
+    localStorage.setItem('cart', JSON.stringify(currentCart));
+  };
 
   useEffect(() => {
     getAllBooks();
@@ -56,7 +73,11 @@ const Artbooks = () => {
             <Card.Title>{data.name}</Card.Title>
             <Card.Text>Stock {data.stock}</Card.Text>
             <Card.Text>Price {data.price}</Card.Text>
-            <Button variant="primary">Add to Cart</Button>
+            <Button variant="primary" onClick={(e) => {
+              e.stopPropagation();
+              AddToCart(data);
+            }}
+            >Add to Cart</Button>
           </Card.Body>
         </Card>
 
@@ -71,8 +92,13 @@ const Artbooks = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>Close</Button>
-            <Button variant="primary">Add to Cart</Button>
-          </Modal.Footer>
+            <Button variant="primary" onClick={(e) => {
+              e.stopPropagation();
+              AddToCart(data);
+            }}
+            >
+            Add to Cart</Button>
+                      </Modal.Footer>
         </Modal>
       </React.Fragment>
     );
@@ -94,4 +120,4 @@ const Artbooks = () => {
   );
 }
 
-export default Artbooks;
+export default ArtBooks;

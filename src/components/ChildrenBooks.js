@@ -3,30 +3,49 @@ import axios from 'axios';
 import { Container, Row, Card, Button, Modal } from 'react-bootstrap';
 import './styles.css';
 
-const Childrenbooks = () => {
+const ChildrenBooks = () => {
   const [clicked, setClicked] = useState(null);
   const [books, setBooks] = useState([]);
+  const [cart, setCart] = useState([]);
 
   function getAllBooks() {
     axios.get("http://localhost:8000/children-books")
       .then(response => {
-        const uniqueBooks = getUniqueBooksByName(response.data);
-        setBooks(uniqueBooks);
+        setBooks(response.data.filter(data => data.categories.includes(6)));
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
   }
 
-  function getUniqueBooksByName(booksArray) {
-    const unique = {};
-    booksArray.forEach(book => {
-      if (book.categories.includes(6)) {
-        unique[book.name] = book;
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error("Error parsing cart from localStorage:", error);
       }
-    });
-    return Object.values(unique);
-  }
+    }
+  }, []);
+
+  const AddToCart = (book) => {
+    let currentCart = localStorage.getItem('cart');
+    currentCart = currentCart ? JSON.parse(currentCart) : [];
+    
+    const existingItemIndex = currentCart.findIndex(item => item.id === book.id);
+    
+    if (existingItemIndex !== -1) {
+      // עדכון כמות אם הפריט כבר קיים
+      currentCart[existingItemIndex].quantity += 1;
+    } else {
+      // הוספת הפריט כחדש אם הוא לא קיים
+      currentCart.push({ ...book, quantity: 1 });
+    }
+  
+    localStorage.setItem('cart', JSON.stringify(currentCart));
+  };
 
   useEffect(() => {
     getAllBooks();
@@ -56,7 +75,11 @@ const Childrenbooks = () => {
             <Card.Title>{data.name}</Card.Title>
             <Card.Text>Stock {data.stock}</Card.Text>
             <Card.Text>Price {data.price}</Card.Text>
-            <Button variant="primary">Add to Cart</Button>
+            <Button variant="primary" onClick={(e) => {
+              e.stopPropagation();
+              AddToCart(data);
+            }}
+            >Add to Cart</Button>
           </Card.Body>
         </Card>
 
@@ -71,8 +94,13 @@ const Childrenbooks = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>Close</Button>
-            <Button variant="primary">Add to Cart</Button>
-          </Modal.Footer>
+            <Button variant="primary" onClick={(e) => {
+              e.stopPropagation();
+              AddToCart(data);
+            }}
+            >
+            Add to Cart</Button>
+                      </Modal.Footer>
         </Modal>
       </React.Fragment>
     );
@@ -94,4 +122,4 @@ const Childrenbooks = () => {
   );
 }
 
-export default Childrenbooks;
+export default ChildrenBooks;

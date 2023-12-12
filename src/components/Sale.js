@@ -9,7 +9,7 @@ const Sale = () => {
   const [cart, setCart] = useState([]);
 
   function getAllBooks() {
-    axios.get("http://localhost:8000/fiction-books")
+    axios.get("http://localhost:8000/sale")
       .then(response => {
         setBooks(response.data.filter(data => data.categories.includes(10)));
       })
@@ -30,19 +30,23 @@ const Sale = () => {
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
 
+ 
   const AddToCart = (book) => {
-    const existingItem = cart.find(item => item.id === book.id);
-    if (existingItem) {
-      setCart(cart.map(item => 
-        item.id === book.id ? { ...item, quantity: item.quantity + 1 } : item
-      ));
+    let currentCart = localStorage.getItem('cart');
+    currentCart = currentCart ? JSON.parse(currentCart) : [];
+    
+    const existingItemIndex = currentCart.findIndex(item => item.id === book.id);
+    
+    if (existingItemIndex !== -1) {
+      // עדכון כמות אם הפריט כבר קיים
+      currentCart[existingItemIndex].quantity += 1;
     } else {
-      setCart([...cart, { ...book, quantity: 1 }]);
+      // הוספת הפריט כחדש אם הוא לא קיים
+      currentCart.push({ ...book, quantity: 1 });
     }
+  
+    localStorage.setItem('cart', JSON.stringify(currentCart));
   };
 
   useEffect(() => {

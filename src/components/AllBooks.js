@@ -6,6 +6,7 @@ import './styles.css';
 const AllBooks = () => {
   const [clicked, setClicked] = useState(null);
   const [books, setBooks] = useState([]);
+  const [cart, setCart] = useState([]);
 
   function getAllBooks() {
     axios.get("http://localhost:8000/art-books")
@@ -16,6 +17,37 @@ const AllBooks = () => {
         console.error("Error fetching data:", error);
       });
   }
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error("Error parsing cart from localStorage:", error);
+      }
+    }
+  }, []);
+
+
+
+  const AddToCart = (book) => {
+    let currentCart = localStorage.getItem('cart');
+    currentCart = currentCart ? JSON.parse(currentCart) : [];
+    
+    const existingItemIndex = currentCart.findIndex(item => item.id === book.id);
+    
+    if (existingItemIndex !== -1) {
+      // עדכון כמות אם הפריט כבר קיים
+      currentCart[existingItemIndex].quantity += 1;
+    } else {
+      // הוספת הפריט כחדש אם הוא לא קיים
+      currentCart.push({ ...book, quantity: 1 });
+    }
+  
+    localStorage.setItem('cart', JSON.stringify(currentCart));
+  };
 
   useEffect(() => {
     getAllBooks();
@@ -30,22 +62,18 @@ const AllBooks = () => {
   };
 
   const BookCard = ({ data }) => {
-    const hasPromotion = data.categories.includes(10);
-
     return (
       <React.Fragment key={data.id}>
         <Card className="large-card" onClick={() => handleClick(data.id)} style={{ width: '18rem', margin: '1rem', position: 'relative' }}>
-          {hasPromotion && (
-            <div className="ribbon">
-              <span>SALE</span>
-            </div>
-          )}
+          <div className="ribbon">
+            <span>SALE</span>
+          </div>
           <Card.Img variant="top" src={`http://localhost:8000/${data.image}`} style={{ width: '100%', height: '100%' }} />
           <Card.Body>
             <Card.Title>{data.name}</Card.Title>
             <Card.Text>Stock {data.stock}</Card.Text>
             <Card.Text>Price {data.price}</Card.Text>
-            <Button variant="primary">Add to Cart</Button>
+            <Button variant="primary" onClick={()=>AddToCart(data)}>Add to Cart</Button>
           </Card.Body>
         </Card>
 
@@ -60,7 +88,10 @@ const AllBooks = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>Close</Button>
-            <Button variant="primary">Add to Cart</Button>
+            <Button variant="primary" onClick={(e) => {
+              e.stopPropagation();
+              AddToCart(data);
+            }}>Add to Cart</Button>
           </Modal.Footer>
         </Modal>
       </React.Fragment>
@@ -69,18 +100,20 @@ const AllBooks = () => {
 
   return (
     <div style={{ backgroundColor: "#d2b7ac" }}>
-      <center><h1 className='gradient-textp1art'>Come and see our secret Art books</h1></center>
+      <center><h1 className='gradient-textp1art'>This is the Secret Book collection</h1></center>
       <center>
         <Container>
           <Row>
             {books.map((data) => (
-              <BookCard data={data}/>
+              <BookCard key={data.id} data={data}/>
             ))}
           </Row>
         </Container>
       </center>
     </div>
   );
+
+  
 }
 
 export default AllBooks;
