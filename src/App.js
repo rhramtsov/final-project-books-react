@@ -19,6 +19,7 @@ import Alert from 'react-bootstrap/Alert';
 import SoundPlayer from "./components/soundPlayer";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const HOST_URL = "https://django-rest-product.onrender.com";
 
 const fetchCategories = async () => {
   const response = await axios.get(`http://localhost:8000/category`);
