@@ -2,32 +2,48 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Card, Button, Modal } from 'react-bootstrap';
 import './styles.css';
-import { useParams } from 'react-router-dom';
 
 const FictionBooks = () => {
   const [clicked, setClicked] = useState(null);
   const [books, setBooks] = useState([]);
+  const [cart, setCart] = useState([]);
 
   function getAllBooks() {
     axios.get("http://localhost:8000/fiction-books")
       .then(response => {
-        const uniqueBooks = getUniqueBooksByName(response.data);
-        setBooks(uniqueBooks);
+        setBooks(response.data.filter(data => data.categories.includes(8)));
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
   }
 
-  function getUniqueBooksByName(booksArray) {
-    const unique = {};
-    booksArray.forEach(book => {
-      if (book.categories.includes(8)) {
-        unique[book.name] = book;
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error("Error parsing cart from localStorage:", error);
       }
-    });
-    return Object.values(unique);
-  }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
+  const AddToCart = (book) => {
+    const existingItem = cart.find(item => item.id === book.id);
+    if (existingItem) {
+      setCart(cart.map(item => 
+        item.id === book.id ? { ...item, quantity: item.quantity + 1 } : item
+      ));
+    } else {
+      setCart([...cart, { ...book, quantity: 1 }]);
+    }
+  };
 
   useEffect(() => {
     getAllBooks();
@@ -57,7 +73,11 @@ const FictionBooks = () => {
             <Card.Title>{data.name}</Card.Title>
             <Card.Text>Stock {data.stock}</Card.Text>
             <Card.Text>Price {data.price}</Card.Text>
-            <Button variant="primary">Add to Cart</Button>
+            <Button variant="primary" onClick={(e) => {
+              e.stopPropagation();
+              AddToCart(data);
+            }}
+            >Add to Cart</Button>
           </Card.Body>
         </Card>
 
@@ -72,8 +92,13 @@ const FictionBooks = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>Close</Button>
-            <Button variant="primary">Add to Cart</Button>
-          </Modal.Footer>
+            <Button variant="primary" onClick={(e) => {
+              e.stopPropagation();
+              AddToCart(data);
+            }}
+            >
+            Add to Cart</Button>
+                      </Modal.Footer>
         </Modal>
       </React.Fragment>
     );
@@ -81,12 +106,12 @@ const FictionBooks = () => {
 
   return (
     <div style={{ backgroundColor: "#d2b7ac" }}>
-      <center><h1 className='gradient-textp1art'>Come and see our secret Fiction books</h1></center>
+      <center><h1 className='gradient-textp1art'>Come and see our secret Children books</h1></center>
       <center>
         <Container>
           <Row>
             {books.map((data) => (
-              <BookCard data={data} />
+              <BookCard key={data.id} data={data}/>
             ))}
           </Row>
         </Container>

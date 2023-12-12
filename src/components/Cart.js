@@ -3,7 +3,6 @@ import axios from "axios";
 import back from "../assets/images/back.jpeg";
 import "./styles.css";
 import { Modal, Button } from 'react-bootstrap'; 
-
 import { Link, useNavigate } from "react-router-dom";
 
 function Cart() {
