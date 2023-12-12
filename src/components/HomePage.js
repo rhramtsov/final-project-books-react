@@ -29,7 +29,7 @@ function HomePage() {
       >
         <Row className="justify-content-md-center">
           <Col md={8} className="text-left">
-            <h1 class="gradient-text-1">Welcome {userName} my frind to</h1>
+            <h1 class="gradient-text-1">Welcome {userName} to</h1>
             <h1 class="gradient-outlined-text">THE SECRECT BOOK STORE</h1>
 
             <p class="gradient-textp1">

@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Footer() {
+  const emailAddress = "r.hramtsov@gmail.com"; 
+
   return (
     <div
       style={{
@@ -34,9 +36,13 @@ function Footer() {
               Register
             </Link>
           </li>
+          <li className="nav-item">
+            <a href={`mailto:${emailAddress}`} className="nav-link px-2 text-muted">
+              Contact Us
+            </a>
+          </li>
         </ul>
         <p className="text-center text-muted">© 2023 Company RM, Inc</p>
-      
       </footer>
     </div>
   );
